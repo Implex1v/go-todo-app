@@ -1,1 +1,1 @@
-# go-course
+# go-todo-app
