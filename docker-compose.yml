@@ -1,0 +1,6 @@
+version: '3.7'
+
+services:
+  api-server:
+    build: ./api-server
+    image: api-server
