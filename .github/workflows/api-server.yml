@@ -3,6 +3,8 @@ name: api-server
 on:
   push:
     branches: [ main ]
+    paths: 
+      - api-server/
 
 defaults:
   run:
