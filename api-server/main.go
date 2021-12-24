@@ -1,9 +1,9 @@
 package main
 
 import (
+	"api-server/config"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"gokurs/config"
 	"io"
 	"os"
 )
