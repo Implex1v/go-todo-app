@@ -14,4 +14,4 @@ ENV GIN_MODE release
 
 COPY --from=build /app/api-server ./
 
-CMD ["api-server"]
+CMD ["./api-server"]
