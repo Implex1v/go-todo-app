@@ -18,7 +18,7 @@ func (c EnvConfig) Port() string {
 }
 
 func GetConfig() Config {
-	return EnvConfig{
+	return &EnvConfig{
 		port: getEnvDefault("PORT", "8080"),
 	}
 }
