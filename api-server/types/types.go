@@ -1,12 +1,10 @@
 package types
 
-import (
-	"gorm.io/gorm"
-	"time"
-)
+import "gorm.io/gorm"
 
-type Todo struct {
+type User struct {
 	gorm.Model
-	title   string
-	dueDate time.Time
+	Username string `gorm:"unique" json:"username"`
+	Email    string `gorm:"unique" json:"email"`
+	Password string `json:"-"`
 }

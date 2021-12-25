@@ -14,10 +14,15 @@ func GetDb() *gorm.DB {
 		panic(fmt.Sprintf("failed to connect database %s", file))
 	}
 
-	err = db.AutoMigrate(&Todo{})
+	err = db.AutoMigrate(
+		User{},
+	)
 	if err != nil {
 		panic("Failed to migrate types")
 	}
+
+	db.Create(&User{Password: "123456", Username: "Longcat", Email: "longcat@cat.long"})
+
 	return db
 }
 
