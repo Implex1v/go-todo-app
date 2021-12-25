@@ -2,7 +2,6 @@ package routes
 
 import (
 	"api-server/handler"
-	"api-server/routes/user"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
 )
@@ -14,6 +13,5 @@ func registerRoutes(handler *handler.HttpHandler) {
 }
 
 var Module = fx.Options(
-	user.Module,
-	fx.Invoke(registerRoutes),
+	fx.Invoke(registerRoutes, registerRoutesUser),
 )

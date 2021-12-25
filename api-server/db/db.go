@@ -1,8 +1,8 @@
-package types
+package db
 
 import (
+	"api-server/types"
 	"fmt"
-	"go.uber.org/fx"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -15,17 +15,13 @@ func GetDb() *gorm.DB {
 	}
 
 	err = db.AutoMigrate(
-		User{},
+		types.User{},
 	)
 	if err != nil {
 		panic("Failed to migrate types")
 	}
 
-	db.Create(&User{Password: "123456", Username: "Longcat", Email: "longcat@cat.long"})
+	db.Create(&types.User{Password: "123456", Username: "Longcat", Email: "longcat@cat.long"})
 
 	return db
 }
-
-var Module = fx.Options(
-	fx.Provide(GetDb),
-)

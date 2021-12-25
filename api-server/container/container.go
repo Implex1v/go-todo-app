@@ -2,9 +2,9 @@ package container
 
 import (
 	"api-server/config"
+	"api-server/db"
 	"api-server/handler"
 	"api-server/routes"
-	"api-server/types"
 	"context"
 	"fmt"
 	"go.uber.org/fx"
@@ -14,7 +14,7 @@ var Module = fx.Options(
 	handler.Module,
 	routes.Module,
 	config.Module,
-	types.Module,
+	db.Module,
 	fx.Invoke(registerHooks),
 )
 
