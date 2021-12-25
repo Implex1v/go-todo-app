@@ -1,14 +1,25 @@
 package config
 
-import "os"
+import (
+	"go.uber.org/fx"
+	"os"
+)
 
-type Config struct {
-	Port string
+type Config interface {
+	Port() string
 }
 
-func GetConfig() *Config {
-	return &Config{
-		Port: getEnvDefault("PORT", "8080"),
+type EnvConfig struct {
+	port string
+}
+
+func (c EnvConfig) Port() string {
+	return c.port
+}
+
+func GetConfig() Config {
+	return EnvConfig{
+		port: getEnvDefault("PORT", "8080"),
 	}
 }
 
@@ -21,3 +32,5 @@ func getEnvDefault(key string, defaultValue string) string {
 		return defaultValue
 	}
 }
+
+var Module = fx.Options(fx.Provide(GetConfig))

@@ -11,9 +11,9 @@ func TestGetConfig(t *testing.T) {
 		"",
 	}
 
-	expected := []Config{
-		{Port: "5000"},
-		{Port: "8080"},
+	expected := []EnvConfig{
+		{port: "5000"},
+		{port: "8080"},
 	}
 
 	for i, input := range inputs {
@@ -27,8 +27,8 @@ func TestGetConfig(t *testing.T) {
 		}
 
 		got := GetConfig()
-		expect := expected[i].Port
-		if got.Port != expect {
+		expect := expected[i].Port()
+		if got.Port() != expect {
 			t.Errorf("Got '%s' expected '%s'", got, expect)
 		}
 	}
