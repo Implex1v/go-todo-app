@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"regexp"
 	"testing"
 )
@@ -159,7 +160,9 @@ func (s *Suite) SetupSuite() {
 		},
 	}
 
-	s.DB, err = gorm.Open(d, &gorm.Config{})
+	s.DB, err = gorm.Open(d, &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
 	require.NoError(s.T(), err)
 
 	s.dao = NewUserDao(s.DB)
