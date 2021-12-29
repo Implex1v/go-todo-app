@@ -3,10 +3,10 @@ name: api-server
 on:
   push:
     branches: 
-      - main 
+      - main
     workflow_dispatch:
     paths: 
-      - ./api-server/
+      - api-server/**
 
 defaults:
   run:
