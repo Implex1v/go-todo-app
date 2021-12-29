@@ -2,9 +2,10 @@ name: api-server
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main 
     paths: 
-      - api-server/
+      - 'api-server/'
 
 defaults:
   run:
