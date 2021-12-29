@@ -8,12 +8,22 @@ import (
 )
 
 type UserDao interface {
+	Create(user *types.User) (error, *types.User)
 	Get(id int64) (error, *types.User)
 	GetAll() (error, *[]types.User)
 }
 
 type DefaultUserDao struct {
 	db *gorm.DB
+}
+
+func (d DefaultUserDao) Create(user *types.User) (error, *types.User) {
+	e := d.db.Create(user).Error
+	if e != nil {
+		return errors.New(fmt.Sprintf("UserDao: Cloud not create User: '%s'", e.Error())), nil
+	} else {
+		return nil, user
+	}
 }
 
 func (d DefaultUserDao) Get(id int64) (error, *types.User) {
