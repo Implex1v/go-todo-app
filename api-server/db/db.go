@@ -1,17 +1,31 @@
 package db
 
 import (
+	"api-server/config"
 	"api-server/types"
 	"fmt"
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"strings"
 )
 
-func GetDb() *gorm.DB {
-	file := "test.db"
-	db, err := gorm.Open(sqlite.Open(file), &gorm.Config{})
+func GetDb(c config.Config) *gorm.DB {
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s TimeZone=Europe/Berlin",
+		c.DbHost(),
+		c.DbUser(),
+		c.DbPassword(),
+		c.DbName(),
+		c.DbPort(),
+	)
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic(fmt.Sprintf("failed to connect database %s", file))
+		error := fmt.Sprintf(
+			"Db: failed to connect to database '%s'",
+			strings.ReplaceAll(dsn, c.DbPassword(), "hidden"),
+		)
+		panic(error)
 	}
 
 	err = db.AutoMigrate(
