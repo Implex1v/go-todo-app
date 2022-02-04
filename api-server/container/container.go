@@ -4,10 +4,12 @@ import (
 	"api-server/config"
 	"api-server/db"
 	"api-server/handler"
+	"api-server/logger"
 	"api-server/routes"
 	"context"
 	"fmt"
 	"go.uber.org/fx"
+	"go.uber.org/zap"
 )
 
 var Module = fx.Options(
@@ -15,10 +17,11 @@ var Module = fx.Options(
 	routes.Module,
 	config.Module,
 	db.Module,
+	logger.Module,
 	fx.Invoke(registerHooks),
 )
 
-func registerHooks(lifecycle fx.Lifecycle, h *handler.HttpHandler, config config.Config) {
+func registerHooks(lifecycle fx.Lifecycle, h *handler.HttpHandler, config config.Config, logger *zap.SugaredLogger) {
 	lifecycle.Append(
 		fx.Hook{
 			OnStart: func(ctx context.Context) error {
@@ -27,7 +30,7 @@ func registerHooks(lifecycle fx.Lifecycle, h *handler.HttpHandler, config config
 			},
 
 			OnStop: func(ctx context.Context) error {
-				// TODO log
+				logger.Info("Container: OnStop called")
 				return nil
 			},
 		},

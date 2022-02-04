@@ -4,12 +4,13 @@ import (
 	"api-server/config"
 	"api-server/types"
 	"fmt"
+	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"strings"
 )
 
-func GetDb(c config.Config) *gorm.DB {
+func GetDb(c config.Config, l *zap.Logger) *gorm.DB {
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s TimeZone=Europe/Berlin",
 		c.DbHost(),
@@ -25,6 +26,7 @@ func GetDb(c config.Config) *gorm.DB {
 			"Db: failed to connect to database '%s'",
 			strings.ReplaceAll(dsn, c.DbPassword(), "hidden"),
 		)
+		l.Error(error)
 		panic(error)
 	}
 
