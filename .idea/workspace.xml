@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0bcf5dc6-3c21-4904-b4e3-ce5dd5a7cf84" name="Changes" comment="(api-server) Fix user test">
+    <list default="true" id="0bcf5dc6-3c21-4904-b4e3-ce5dd5a7cf84" name="Changes" comment="(api-server) Remove .idea directory">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/api-server.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/_build.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/api-server/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/api-server/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-server/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/api-server/config/config.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +103,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="(api-server) Fix user test" />
-    <option name="LAST_COMMIT_MESSAGE" value="(api-server) Fix user test" />
+    <MESSAGE value="(api-server) Remove .idea directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="(api-server) Remove .idea directory" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

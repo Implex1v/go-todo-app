@@ -7,6 +7,7 @@ import (
 
 type Config interface {
 	Port() string
+	Version() string
 
 	DbUser() string
 	DbPassword() string
@@ -17,6 +18,7 @@ type Config interface {
 
 type EnvConfig struct {
 	port       string
+	version    string
 	dbUser     string
 	dbPassword string
 	dbPort     string
@@ -48,9 +50,14 @@ func (c EnvConfig) Port() string {
 	return c.port
 }
 
+func (c EnvConfig) Version() string {
+	return c.version
+}
+
 func GetConfig() Config {
 	return &EnvConfig{
 		port:       getEnvDefault("PORT", "8080"),
+		version:    getEnvDefault("VERSION", "undefined"),
 		dbUser:     getEnvDefault("DB_USER", "todoapp"),
 		dbPassword: getEnvDefault("DB_PASSWORD", "todoapp"),
 		dbPort:     getEnvDefault("DB_PORT", "5432"),
