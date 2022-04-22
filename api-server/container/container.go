@@ -4,7 +4,6 @@ import (
 	"api-server/config"
 	"api-server/db"
 	"api-server/handler"
-	"api-server/logger"
 	"api-server/routes"
 	"context"
 	"fmt"
@@ -17,7 +16,7 @@ var Module = fx.Options(
 	routes.Module,
 	config.Module,
 	db.Module,
-	logger.Module,
+	//logger.Module,
 	fx.Invoke(registerHooks),
 )
 

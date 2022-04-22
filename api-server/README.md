@@ -6,8 +6,9 @@ As database postgres is used.
 See [docker-compose file](../docker-compose.yml) for more information.
 
 ## go
+Go 1.18 is required.
 
-Run `go mod install` to install go dependencies.
+Run `go mod download` to install go dependencies.
 
 ## Docker
 
