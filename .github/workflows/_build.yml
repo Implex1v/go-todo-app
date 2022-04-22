@@ -1,4 +1,4 @@
-name: build
+name: _build
 
 on: # https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
   workflow_call:

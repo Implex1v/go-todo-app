@@ -4,7 +4,7 @@ on:
       - main
     paths:
       - api-server/**
-    workflow_dispatch:
+  workflow_dispatch:
 
 defaults:
   run:
