@@ -22,18 +22,20 @@ func GetDb(c config.Config, l *zap.Logger) *gorm.DB {
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		error := fmt.Sprintf(
-			"Db: failed to connect to database '%s'",
+		e := fmt.Sprintf(
+			"Db: failed to connect to database '%s': '%s'",
 			strings.ReplaceAll(dsn, c.DbPassword(), "hidden"),
+			err.Error(),
 		)
-		l.Error(error)
-		panic(error)
+		l.Error(e)
+		panic(e)
 	}
 
 	err = db.AutoMigrate(
 		types.User{},
 	)
 	if err != nil {
+		l.Error(fmt.Sprintf("Db: Failed to migrate model to database at '%s:%s': '%s'", c.DbHost(), c.DbPort(), err.Error()))
 		panic("Failed to migrate types")
 	}
 

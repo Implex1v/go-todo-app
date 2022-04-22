@@ -6,7 +6,7 @@ services:
     image: api-server
 
   db:
-    image: postgres
+    image: postgres:14-bullseye
     restart: always
     ports:
       - "5432:5432"
@@ -17,7 +17,7 @@ services:
 
   pgadmin:
     container_name: pgadmin_container
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:6
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
