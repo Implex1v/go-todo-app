@@ -1,0 +1,53 @@
+name: build
+
+on: # https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
+  workflow_call:
+    inputs:
+      runs-on:
+        description: The default build-agent
+        type: string
+        required: false
+        # See https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+        default: "ubuntu-20.04"
+      component:
+        description: The component to build & deploy
+        type: string
+        required: true
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ inputs.component }}/
+
+jobs:
+  version:
+    runs-on: ${{ inputs.runs-on }}
+    outputs: # NOTE: We need the output in other jobs
+      semver: ${{ steps.gitversion.outputs.semVer }}
+    steps:
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        with:
+          versionSpec: "5.x"
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # For gitversion
+      # https://github.com/GitTools/actions/blob/main/docs/examples/github/gitversion/index.md
+      - id: gitversion
+        name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0.9.7
+        with:
+          useConfigFile: true
+
+  build:
+    needs:
+      - version
+    runs-on: ${{ inputs.runs-on }}
+    env:
+      GIT_COMMIT: ${{ github.sha }}
+      BUILD_VERSION: ${{ needs.version.outputs.semver }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build container image
+        run: |
+          docker-compose build ${COMPONENT}
