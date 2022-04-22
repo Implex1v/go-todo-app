@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
+	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -150,6 +151,7 @@ type Suite struct {
 func (s *Suite) SetupSuite() {
 	var db *sql.DB
 	var err error
+	nopLogger := logger.Default.LogMode(logger.Silent)
 
 	db, s.mock, err = sqlmock.New()
 	require.NoError(s.T(), err)
@@ -161,9 +163,9 @@ func (s *Suite) SetupSuite() {
 	}
 
 	s.DB, err = gorm.Open(d, &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Silent),
+		Logger: nopLogger,
 	})
 	require.NoError(s.T(), err)
 
-	s.dao = NewUserDao(s.DB)
+	s.dao = NewUserDao(s.DB, zap.NewNop())
 }
