@@ -17,7 +17,6 @@ on: # https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
 defaults:
   run:
     shell: bash
-    working-directory: ${{ inputs.component }}/
 
 jobs:
   version:

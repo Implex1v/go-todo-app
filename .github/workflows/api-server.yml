@@ -13,6 +13,6 @@ defaults:
 
 jobs:
   build:
-    uses: implex1v/go-todo-app/.github/workflows/_build.yml@main
+    uses: Implex1v/go-todo-app/.github/workflows/_build.yml@main
     with:
       component: api-server
