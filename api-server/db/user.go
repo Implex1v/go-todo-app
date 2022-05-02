@@ -12,6 +12,7 @@ type UserDao interface {
 	Create(user *types.User) (error, *types.User)
 	Get(id int64) (error, *types.User)
 	GetAll() (error, *[]types.User)
+	Update(user *types.User) (error, *types.User)
 }
 
 type DefaultUserDao struct {
@@ -19,11 +20,22 @@ type DefaultUserDao struct {
 	logger *zap.Logger
 }
 
+func (d DefaultUserDao) Update(user *types.User) (error, *types.User) {
+	d.db.Model(&user).Updates(user)
+	e := d.db.Error
+	if e != nil {
+		d.logger.Warn(fmt.Sprintf("UserDao: cloud not update user: '%s'", e.Error()))
+		return errors.New("could not update user"), nil
+	} else {
+		return nil, user
+	}
+}
+
 func (d DefaultUserDao) Create(user *types.User) (error, *types.User) {
 	e := d.db.Create(user).Error
 	if e != nil {
-		d.logger.Warn(fmt.Sprintf("UserDao: Cloud not create User: '%s'", e.Error()))
-		return errors.New("could not create user"), nil
+		d.logger.Warn(fmt.Sprintf("UserDao: cloud not create user: '%s'", e.Error()))
+		return errors.New("could not Create user"), nil
 	} else {
 		return nil, user
 	}
